@@ -31,9 +31,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     build-essential \
     libomp-dev \
     libopenblas-dev \
-    libopenblas-base \
+    libopenblas0-pthread \
     liblapack-dev \
-    libatlas-base-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set OpenBLAS to use all available cores
@@ -86,7 +85,7 @@ ENV HUGGINGFACE_HUB_CACHE=/data \
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libomp-dev \
-    libopenblas-base \
+    libopenblas0-pthread \
     ca-certificates \
     libssl-dev \
     curl \
