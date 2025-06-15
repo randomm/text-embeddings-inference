@@ -2,7 +2,7 @@ name: Build CPU AMD Docker Image
 
 on:
   push:
-    branches: [ fix-dockerfile-issue ]
+    branches: [ fix-dockerfile-issue, amd-optimization-test ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
