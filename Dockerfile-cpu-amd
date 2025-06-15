@@ -26,18 +26,11 @@ ARG DOCKER_LABEL
 # sccache specific variables
 ARG SCCACHE_GHA_ENABLED
 
-# Install build dependencies with OpenBLAS for optimal AMD performance
+# Install build dependencies without Intel MKL for AMD compatibility
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     build-essential \
     libomp-dev \
-    libopenblas-dev \
-    libopenblas0-pthread \
-    liblapack-dev \
     && rm -rf /var/lib/apt/lists/*
-
-# Set OpenBLAS to use all available cores
-ENV OPENBLAS_NUM_THREADS=0
-ENV OPENBLAS_CORETYPE=ZEN
 
 COPY --from=planner /usr/src/recipe.json recipe.json
 
@@ -79,13 +72,10 @@ ENV HUGGINGFACE_HUB_CACHE=/data \
     PORT=80 \
     RAYON_NUM_THREADS=0 \
     OMP_NUM_THREADS=0 \
-    OPENBLAS_NUM_THREADS=0 \
-    OPENBLAS_CORETYPE=ZEN \
     RUST_BACKTRACE=1
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libomp-dev \
-    libopenblas0-pthread \
     ca-certificates \
     libssl-dev \
     curl \
